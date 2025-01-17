@@ -24,6 +24,9 @@
     <h1>Résultat</h1>
     <p>Votre message : "{{ message }}"</p>
     <p>Résultat : {{ result }}</p>
+    {% if suspicious_words %}
+        <p>Mots suspects : {{ suspicious_words|join(", ") }}</p>
+    {% endif %}
     <a href="/">Revenir à la page d'accueil</a>
 </body>
 </html>
