@@ -9,29 +9,54 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="./index.html">Accueil</a>
+          <a class="navbar-brand" href="/">Accueil</a>
           <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="/docs">Vers la documentation
-                  <span class="visually-hidden">(current)</span>
-                </a>
+                <a class="nav-link active" href="/docs">Documentation</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/history">Historique</a>
+            </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if request.cookies.get("username") %}
+                    <li class="nav-item">
+                        <span class="nav-link">Bonjour {{ request.cookies.get("username") }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Inscription</a>
+                    </li>
+                {% endif %}
             </ul>
           </div>
         </div>
       </nav>
-    <h1>{{ heading }}</h1>
 
-    <form method="post" action="/resultats">
-      <fieldset>
-        <div class="d-flex flex-column w-100 justify-content-center">
-          <label for="message" class="form-label mt-4">Votre message : </label>
-          <textarea class="form-control w-75 m-auto" id="message" name = "message" rows="3"></textarea>
+    {% if request.cookies.get("username") %}
+        <h1>{{ heading }}</h1>
+        <form method="post" action="/resultats">
+            <fieldset>
+                <div class="d-flex flex-column w-100 justify-content-center">
+                    <label for="message" class="form-label mt-4">Votre message : </label>
+                    <textarea class="form-control w-75 m-auto" id="message" name="message" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger">Envoyer</button>
+            </fieldset>
+        </form>
+    {% else %}
+        <div class="container mt-5">
+            <div class="alert alert-warning">
+                Veuillez vous connecter pour accéder au détecteur de spam.
+            </div>
         </div>
-        </fieldset>
-        <button type="submit" class="btn btn-danger">Envoyer</button>
-      </fieldset>
-    </form>
+    {% endif %}
 </body>
 </html>

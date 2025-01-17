@@ -7,6 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 3778
+EXPOSE 5568
 
-CMD [ "fastapi", "run", "server.py", "--host", "0.0.0.0", "--port", "3778" ]
+CMD [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5568" ]
